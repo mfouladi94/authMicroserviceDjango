@@ -12,7 +12,7 @@ services:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     ports:
-      - "5433:5432"
+      - "5432:5432"
     volumes:
       - ./pg_data:/var/lib/postgresql/data
 
@@ -64,6 +64,7 @@ services:
   
   rabbitmq:
     image: rabbitmq:3-management
+    container_name: rabbit_${PROJECT_NAME}
     ports:
       - 5672:5672
       - 15672:15672
