@@ -1,0 +1,20 @@
+# Use the official Python image as the base image
+FROM python:3.10
+
+# Set environment variables
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
+
+# Copy the code
+
+WORKDIR /app
+COPY requirements.txt .
+
+# Install dependencies
+#RUN pip install --upgrade pip
+
+RUN pip install -r requirements.txt --default-timeout=100
+
+COPY .. /app
+
+CMD ["celery", "-A", "djangoApiBoilerPlate", "worker", "--loglevel=info"]

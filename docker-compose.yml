@@ -33,6 +33,7 @@ services:
     image: redis:latest
     ports:
       - "6379:6379"
+ 
   nginx:
     container_name: nginx_${PROJECT_NAME}
     image: nginx:latest
@@ -60,8 +61,23 @@ services:
     depends_on:
       - postgres
       - redis
+  
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - 5672:5672
+      - 15672:15672
 
-
+  celery:
+    container_name: celery_backend_server
+    build:
+      context: .
+      dockerfile: Docker/DockerfileWorkers
+      args:
+        ENV_FILE: .env
+    depends_on:
+      - rabbitmq
+      - postgres
 volumes:
   static_volume:
   media_volume:
