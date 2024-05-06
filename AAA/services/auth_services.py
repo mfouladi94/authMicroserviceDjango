@@ -2,6 +2,7 @@ from django.contrib.auth import get_user_model
 from rest_framework_simplejwt.tokens import RefreshToken
 from AAA.tasks import send_registration_message
 from utils import apiResponses
+import json
 
 
 UserModel = get_user_model()
@@ -27,7 +28,7 @@ def ServiceLogin(email , password):
             'refresh': str(JWTTPKENREFRESH),
             'access': str(JWTTPKENREFRESH.access_token)
         }
-        send_registration_message.delay(user.username)
+        
         return apiResponses.APIResponse(status=apiResponses.OK, code=apiResponses.CODE_SUCCESS, messages="Login successfully",
                            data=response)
         
@@ -44,6 +45,7 @@ def ServiceSignup( email ,password):
         user = UserModel.objects.create_user(username=email , password=password)
         user.email = email
         user.save()
+        send_registration_message.delay(userId=user.id)
         return apiResponses.APIResponse(status=apiResponses.OK, code=apiResponses.CODE_SUCCESS,
                                         messages="Registered Successfully")
 

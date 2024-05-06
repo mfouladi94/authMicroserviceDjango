@@ -9,3 +9,10 @@ class UserNameSignupSerializer(serializers.Serializer):
 class LoginSerializerInput(serializers.Serializer):
     email = serializers.CharField(max_length=50, required=True)
     password = serializers.CharField(min_length=5, max_length=50, required=True)
+    
+    
+    
+class CustomUserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CustomUser
+        fields = '__all__'

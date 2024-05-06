@@ -1,6 +1,6 @@
 version: '3.9'
 
-name:  boilerplate_raw_change_me
+name:  tcp1
 
 services:
 
@@ -64,10 +64,11 @@ services:
   
   rabbitmq:
     image: rabbitmq:3-management
-    container_name: rabbit_${PROJECT_NAME}
+    container_name: rabbit
     ports:
       - 5672:5672
       - 15672:15672
+
 
   celery:
     container_name: celery_backend_server
@@ -82,3 +83,8 @@ services:
 volumes:
   static_volume:
   media_volume:
+
+networks:
+  tcp1_default:
+
+
